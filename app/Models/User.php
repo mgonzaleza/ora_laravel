@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Notifications\Notifiable;
 
 class User extends BaseUserModel {
 
