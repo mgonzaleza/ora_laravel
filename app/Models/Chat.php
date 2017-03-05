@@ -2,11 +2,7 @@
 
 namespace App\Models;
 
-use Laravel\Scout\Searchable;
-
 class Chat extends BaseModel {
-
-	use Searchable;
 
 	/**
 	 * Get the index name for the model.
