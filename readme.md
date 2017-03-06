@@ -11,6 +11,11 @@ Uses the following packages:
 1. run `composer install`;
 2. run `php artisan migrate --seed`;
 
+## Swagger API Documentation
+The documentation is accessible at: /api/documentation
+You could remove the '/storage/api-docs' folder and regenerate the docs by
+running: `php artisan l5-swagger:generate`
+
 ## Secrets Generation
 
 Every time you create a new project starting from this repository, the _php artisan jwt:generate_ command will be executed.
