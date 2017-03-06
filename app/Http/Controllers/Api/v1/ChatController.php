@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -9,53 +8,75 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends BaseController {
 
-    /**
-     * Display a listing of the resource.
-     *
-	 * @return \Illuminate\Http\JsonResponse
-	 */
+  /**
+   * @SWG\Get(
+   *   path="/api/chats",
+   *   summary="list chats",
+   *   tags={"Chats"},
+   *   @SWG\Response(
+   *     response=200,
+   *     description="A list of chats"
+   *   )
+   * )
+   */
     public function index() {
     	$search_text = request()->input('s');
 
     	$page_limit = request()->input('limit', 5);
 	    $page_limit = (1 > $page_limit) ? 10 : (int) $page_limit;
 
-	    $chats = Chat::search($search_text);
-	    $chats_paginated = $chats->paginate($page_limit);
-
-	    // create custom pagination, because standard pagination toolset doesn't work as expected
-	    // and doesn't provide all needed data
-	    $page_count = ceil(count($chats->get()) / $page_limit);
-		$pagination_data = [
-			'page_count' => $page_count,
-			'current_page' => $chats_paginated->currentPage(),
-			'has_next_page' => $chats_paginated->currentPage() < $page_count,
-			'has_prev_page' => $chats_paginated->currentPage() > 1,
-			'count' => $chats_paginated->count(),
-			'limit' => $page_limit,
-		];
-
-	    return $this->renderSuccessJsonChatData($chats_paginated->getCollection(), $pagination_data);
+	    $chats = Chat::all();
+	    return $this->renderSuccessJsonChatData($chats);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-	 * @param Request $request
-	 *
-	 * @return \Illuminate\Http\JsonResponse|mixed
-	 */
-    public function store(Request $request) {
-	    $chat = new Chat();
+     * @SWG\Post(
+     *   path="/api/chats",
+     *   summary="list chats",
+     *   tags={"Chats"},
+     *   @SWG\Parameter(
+     *     name="name",
+     *     in="formData",
+     *     description="Name of the Chat",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="user_id",
+     *     in="formData",
+     *     description="User ID",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Response(
+     *     response=400,
+     *     description="Invalid Authenticated UserId supplied"
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="Success"
+     *   ),
+     * )
+     */
+    public function create(Request $request) {
+      $chat = new Chat();
 	    if ($chat->validate($request->all())) {
+        $valid_user = User::find($request->input('user_id'));
+        if($valid_user) {
+          $chat = Chat::create([
+  			    'name'    => $request->input('name'),
+  			    'user_id' => $request->input('user_id')
+  		    ]);
 
-		    $chat = Chat::create([
-			    'name'    => $request->input('name'),
-			    'user_id' => Auth::user()->id,
-		    ]);
+  		    return $this->renderSuccessJsonChatData($chat);
+        } else {
+          $returnData = array(
+            'message' => 'Not a valid user',
+            'errors' => 'error',
 
-		    return $this->renderSuccessJsonChatData($chat);
-
+          );
+          return Response::json($returnData, 400);
+        }
 	    } else {
 		    return $this->renderFailedJson($chat->getValidationErrors());
 	    }

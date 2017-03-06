@@ -5,9 +5,14 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Traits\RestTrait;
+use App\Traits\RestExceptionHandlerTrait;
 
 class Handler extends ExceptionHandler
 {
+    use RestTrait;
+    use RestExceptionHandlerTrait;
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -44,7 +49,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+      if(!$this->isApiCall($request)) {
+          $retval = parent::render($request, $e);
+      } else {
+          $retval = $this->getJsonResponseForException($request, $e);
+      }
+
+      return $retval;
     }
 
     /**

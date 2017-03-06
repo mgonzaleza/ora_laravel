@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Api\V1\Controllers;
 
 use App\Models\User;

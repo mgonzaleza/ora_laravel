@@ -23,17 +23,17 @@ class User extends BaseUserModel {
 			'name'     => 'required|max:255',
 			'email'    => 'required|email|max:255|unique:users',
 			'password' => 'required|min:6|max:255',
-			'confirm'  => 'required|min:6|max:255|same:password',
+			//'confirm'  => 'required|min:6|max:255|same:password',
 		],
 		self::VALIDATION_RULE_LOGIN        => [
 			'email'    => 'required|email|max:255',
 			'password' => 'required|min:6|max:255',
 		],
 		self::VALIDATION_RULE_UPDATE        => [
-			'name'     => 'present|max:255',
-			'email'    => 'present|email|max:255',
-			'password' => 'present|min:6|max:255',
-			'confirm'  => 'required_with:password|min:6|max:255|same:password',
+			'name'     => 'max:255',
+			'email'    => 'email|max:255',
+			'password' => 'min:6|max:255',
+			//'confirm'  => 'required_with:password|min:6|max:255|same:password',
 		],
 	];
 

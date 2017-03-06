@@ -9,8 +9,7 @@ Uses the following packages:
 ## Installation
 
 1. run `composer install`;
-
-Once the project creation procedure will be completed, run the `php artisan migrate` command to install the required tables.
+2. run `php artisan migrate --seed`;
 
 ## Secrets Generation
 
@@ -20,5 +19,5 @@ Every time you create a new project starting from this repository, the _php arti
 
 There are some extra options that placed in a _config/boilerplate.php_ file:
 
-* `sign_up.release_token`: set it to `true` if you want your app release the token right after the sign up process;
-* `reset_password.release_token`: set it to `true` if you want your app release the token right after the password reset process;
+* `sign_up.release_token`: set it to `true` if you want the token right after the sign up process;
+* `reset_password.release_token`: set it to `true` if you want the token right after the password reset process;

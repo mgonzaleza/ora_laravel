@@ -1,6 +1,15 @@
 <?php
+/**
+ * @SWG\Swagger(
+ *   @SWG\Info(
+ *     title="ORA Chat API",
+ *     version="1.0.0"
+ *   )
+ * )
+ */
+namespace App\Http\Controllers\Api\v1;
 
-namespace App\Api\V1\Controllers;
+use App\Http\Controllers\Controller;
 
 class BaseController extends Controller {
 

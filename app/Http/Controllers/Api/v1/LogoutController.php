@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Api\V1\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tymon\JWTAuth\JWTAuth;
@@ -9,9 +8,9 @@ use App\Api\V1\Requests\LoginRequest;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class LoginController extends Controller
+class LogoutController extends Controller
 {
-    public function login(LoginRequest $request, JWTAuth $JWTAuth)
+    public function logout(LoginRequest $request, JWTAuth $JWTAuth)
     {
         $credentials = $request->only(['email', 'password']);
 

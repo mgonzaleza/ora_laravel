@@ -1,26 +1,36 @@
 <?php
+namespace App\Http\Controllers\Api\v1;
 
-namespace App\Http\Controllers;
-
-use App\Models\Message;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use App\Models\Chat;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Chat;
+use App\Models\Message;
 
-class MessageController extends BaseController {
+class MessagesController extends BaseController {
 
 	/**
-	 * Display all Messages for the provided Chat id.
-	 *
-	 * @param $chat_id
-	 *
-	 * @return \Illuminate\Http\JsonResponse
-	 */
+   * @SWG\Get(
+   *   path="/api/messages/{chat_id}",
+   *   summary="list of messages",
+   *   tags={"Messages"},
+	 *   @SWG\Parameter(
+	 *     name="chat_id",
+	 *     in="formData",
+	 *     description="Chat ID",
+	 *     required=true,
+	 *     type="string"
+	 *   ),
+   *   @SWG\Response(
+   *     response=200,
+   *     description="A list of a chat messages"
+   *   )
+   * )
+   */
 	public function index($chat_id)
 	{
 		$chat = Chat::find($chat_id);
-		if( ! $chat) {
+		if(!$chat) {
 			return $this->renderFailedJson('Can\'t proceed with a wrong Chat id');
 		}
 
@@ -46,16 +56,44 @@ class MessageController extends BaseController {
 	}
 
 	/**
-	 * Store a newly created Message.
-	 *
-	 * @param $chat_id
-	 * @param Request $request
-	 *
-	 * @return \Illuminate\Http\JsonResponse
+	 * @SWG\Post(
+	 *   path="/api/messages",
+	 *   summary="create new message for specific chat",
+	 *   tags={"Messages"},
+	 *   @SWG\Parameter(
+	 *     name="chat_id",
+	 *     in="formData",
+	 *     description="Chat ID",
+	 *     required=true,
+	 *     type="string"
+	 *   ),
+	 *   @SWG\Parameter(
+	 *     name="user_id",
+	 *     in="formData",
+	 *     description="User ID",
+	 *     required=true,
+	 *     type="string"
+	 *   ),
+	 *   @SWG\Parameter(
+	 *     name="message",
+	 *     in="formData",
+	 *     description="Message",
+	 *     required=true,
+	 *     type="string"
+	 *   ),
+	 *   @SWG\Response(
+	 *     response=400,
+	 *     description="Invalid Authenticated Chat ID/User ID supplied"
+	 *   ),
+	 *   @SWG\Response(
+	 *     response=200,
+	 *     description="Success"
+	 *   ),
+	 * )
 	 */
-	public function store($chat_id, Request $request) {
-		$chat = Chat::find($chat_id);
-		if( ! $chat) {
+	public function create(Request $request) {
+		$chat = Chat::find($request->input('chat_id'));
+		if(!$chat) {
 			return $this->renderFailedJson('Can\'t proceed with a wrong Chat id');
 		}
 
@@ -64,8 +102,8 @@ class MessageController extends BaseController {
 
 			$message = Message::create([
 				'message' => $request->input('message'),
-				'chat_id' => $chat->id,
-				'user_id' => Auth::user()->id,
+				'chat_id' => $request->input('chat_id'),
+				'user_id' => $request->input('user_id'),
 			]);
 
 			return $this->renderSuccessJsonMessageData($message);

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "184dd374a7c73f986998a2a2ee67fe0f",
+    "content-hash": "1327be2dcb8ad4e7b81eb26fcce25412",
     "packages": [
         {
             "name": "barryvdh/laravel-cors",
@@ -61,26 +61,33 @@
         },
         {
             "name": "darkaonline/l5-swagger",
-            "version": "v0.2",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DarkaOnLine/L5-Swagger.git",
-                "reference": "96e30af65e99d425c5150a20fd204074c3d1a9d9"
+                "reference": "9ec908fedf2fa911f2a11456adb88f0aeaa317a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DarkaOnLine/L5-Swagger/zipball/96e30af65e99d425c5150a20fd204074c3d1a9d9",
-                "reference": "96e30af65e99d425c5150a20fd204074c3d1a9d9",
+                "url": "https://api.github.com/repos/DarkaOnLine/L5-Swagger/zipball/9ec908fedf2fa911f2a11456adb88f0aeaa317a2",
+                "reference": "9ec908fedf2fa911f2a11456adb88f0aeaa317a2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0",
-                "zircote/swagger-php": "1.*@dev"
+                "laravel/framework": "5.4.*",
+                "php": ">=5.6.4",
+                "zircote/swagger-php": "~2.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "~0.1",
+                "mockery/mockery": "0.9.*",
+                "orchestra/testbench": "~3.4",
+                "phpunit/phpunit": "~5.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Darkaonline\\L5Swagger\\": "src"
+                    "L5Swagger\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -95,10 +102,11 @@
             ],
             "description": "Swagger integration to Laravel 5",
             "keywords": [
+                "api",
                 "laravel",
                 "swagger"
             ],
-            "time": "2015-05-05T06:29:45+00:00"
+            "time": "2017-02-03T06:21:26+00:00"
         },
         {
             "name": "dingo/api",
@@ -2375,34 +2383,39 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "1.0.0",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "93b904dcdf88ab3a4d195679229943ffc766a0d1"
+                "reference": "b0b136e3c51c8b05d78a0ea3f1b60cd331cc3544"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/93b904dcdf88ab3a4d195679229943ffc766a0d1",
-                "reference": "93b904dcdf88ab3a4d195679229943ffc766a0d1",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/b0b136e3c51c8b05d78a0ea3f1b60cd331cc3544",
+                "reference": "b0b136e3c51c8b05d78a0ea3f1b60cd331cc3544",
                 "shasum": ""
             },
             "require": {
                 "doctrine/annotations": "*",
-                "php": ">=5.3.3"
+                "php": ">=5.6",
+                "symfony/finder": "*"
             },
             "require-dev": {
-                "symfony/finder": "*",
-                "symfony/process": "*"
+                "phpunit/phpunit": ">=4.8 <=5.6",
+                "squizlabs/php_codesniffer": ">=2.7",
+                "zendframework/zend-form": "<2.8"
             },
             "bin": [
                 "bin/swagger"
             ],
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Swagger": "library"
-                }
+                "psr-4": {
+                    "Swagger\\": "src"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2420,14 +2433,15 @@
                     "homepage": "http://bfanger.nl"
                 }
             ],
-            "description": "Swagger-PHP library implementing the swagger.wordnik.com specification to describe web services, operations/actions and models enabling a uniform means of producing, consuming, and visualizing RESTful web services.",
+            "description": "Swagger-PHP - Generate interactive documentation for your RESTful API using phpdoc annotations",
             "homepage": "https://github.com/zircote/swagger-php/",
             "keywords": [
                 "api",
                 "json",
+                "rest",
                 "service discovery"
             ],
-            "time": "2015-04-25T08:05:39+00:00"
+            "time": "2017-02-22T23:16:25+00:00"
         }
     ],
     "packages-dev": [
