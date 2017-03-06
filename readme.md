@@ -12,7 +12,7 @@ Uses the following packages:
 2. run `php artisan migrate --seed`;
 
 ## Swagger API Documentation
-The documentation is accessible at: /api/documentation
+The documentation is accessible at: /api/documentation.
 You could remove the '/storage/api-docs' folder and regenerate the docs by
 running: `php artisan l5-swagger:generate`
 
